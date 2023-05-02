@@ -56,6 +56,7 @@ def count_combinations(words):
 def generate_and_save_combinations(words, file_name="combinations.txt"):
     special_symbols = get_special_symbols()
     completed_combinations = 0
+    generated_combinations = set()
 
     with open(file_name, "w") as f:
         for i in range(2, len(words) + 1):
@@ -73,12 +74,15 @@ def generate_and_save_combinations(words, file_name="combinations.txt"):
                                         result.append(filler_set[filler_index])
                                         filler_index += 1
                                     result.append(word)
-                                if len("".join(result)) <= 32:
+                                if len("".join(result)) <= 32 and "".join(result) not in generated_combinations:
                                     f.write("".join(result) + "\n")
+                                    generated_combinations.add("".join(result))
                                     completed_combinations += 1
                                     if completed_combinations % 1000 == 0:  # Update progress every 1000 combinations
                                         sys.stdout.write(f"\r{completed_combinations} combinations completed.")
                                         sys.stdout.flush()
+
+    print(f"\n{len(generated_combinations)} unique combinations saved to '{file_name}'")
 
 def main():
     words = get_input_words()
