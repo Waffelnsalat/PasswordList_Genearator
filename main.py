@@ -45,7 +45,7 @@ def generate_case_combinations(word):
 
 def count_combinations(words):
     count = 0
-    for i in range(2, len(words) + 1):
+    for i in range(0, len(words) + 1):
         for combo in itertools.permutations(words, i):
             mixed_case_combos = list(itertools.product(*(generate_case_combinations(word) for word in combo)))
             count += len(mixed_case_combos) * len(list(itertools.combinations(range(len(combo) + 1), 16 -
@@ -59,7 +59,7 @@ def generate_and_save_combinations(words, file_name="combinations.txt"):
     generated_combinations = set()
 
     with open(file_name, "w") as f:
-        for i in range(2, len(words) + 1):
+        for i in range(0, len(words) + 1):  # Update the range start from 1 to 0
             for combo in itertools.permutations(words, i):
                 mixed_case_combos = itertools.product(*(generate_case_combinations(word) for word in combo))
                 for mixed_case_combo in mixed_case_combos:
